@@ -156,7 +156,7 @@
         }
         .hero-photo {
             position: absolute; right: 0; bottom: 0;
-            width: 55%; top: calc(var(--header-h) + 20px); overflow: hidden;
+            width: 50%; top: calc(var(--header-h) + 72px); overflow: hidden;
             z-index: 2; will-change: transform;
         }
         .hero-photo img {
@@ -334,7 +334,12 @@
             padding: clamp(32px, 4vw, 52px) clamp(24px, 3vw, 40px);
             transition: background .4s; cursor: default;
             border-right: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
         }
+        /* Remove a borda inferior nos cards da última linha (grid de 3 colunas, 5 itens) */
+        .area-card:nth-last-child(-n+2) { border-bottom: none; }
+        /* Remove a borda direita do último card de cada linha */
+        .area-card:nth-child(3n) { border-right: none; }
         .area-card:last-child { border-right: none; }
         .area-card:hover { background: var(--white); }
         .area-number {
@@ -343,7 +348,11 @@
         }
         .area-number::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.15); }
         .area-title { font-size: 22px; color: var(--black); margin-bottom: 20px; font-weight: 700; line-height: 1.25; }
-        .area-description { font-size: 14px; color: var(--gray-700); line-height: 1.8; margin-bottom: 28px; }
+        .area-description { font-size: 14px; color: var(--gray-700); line-height: 1.8; margin-bottom: 24px; }
+        .area-topics-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 2.5px;
+            text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px;
+        }
         .area-topics { font-size: 12px; font-weight: 500; color: var(--gray-600); line-height: 2; }
         .area-topics span { display: block; }
         .area-topics span::before { content: '— '; color: var(--gray-400); }
@@ -586,7 +595,9 @@
         /* RESPONSIVE */
         @media (max-width: 1024px) {
             .areas-grid { grid-template-columns: 1fr; }
-            .area-card { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
+            .area-card,
+            .area-card:nth-child(3n),
+            .area-card:nth-last-child(-n+2) { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); }
             .area-card:last-child { border-bottom: none; }
             .videos-grid { grid-template-columns: 1fr 1fr; }
             .video-card.featured { grid-column: 1 / -1; grid-row: auto; }
@@ -658,7 +669,7 @@
         <div class="hero-bg" data-parallax="0.3"></div>
         <div class="hero-letter" data-parallax="0.15">VHR</div>
         <div class="hero-photo" data-parallax="-0.12">
-            <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1776909764/tse_vhr2_bkffkj.jpg" alt="Victor Hugo Pereira dos Santos — VHR Advogados" loading="eager">
+            <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1783538636/fotoescritorio_txaw8u.jpg" alt="Victor Hugo Pereira dos Santos — VHR Advogados" loading="eager">
         </div>
         <div class="hero-overlay"></div>
         <div class="hero-overlay-bottom"></div>
@@ -725,7 +736,7 @@
 
     <!-- ÁREAS (LIGHT) -->
     <section class="areas theme-light" id="areas">
-        <div class="bg-letter">03</div>
+        <div class="bg-letter">ÁREAS</div>
         <div class="container">
             <div class="areas-header fade-up">
                 <p class="section-label">Especialidades</p>
@@ -736,31 +747,61 @@
                 <div class="area-card fade-up">
                     <div class="area-number">01 / Administrativo</div>
                     <h3 class="area-title">Direito Administrativo</h3>
-                    <p class="area-description">Concentra-se no âmbito da Administração Pública e da atividade de seus integrantes, com foco em órgãos, entidades e agentes públicos.</p>
+                    <p class="area-description">Assessoria jurídica especializada em Direito Público, com atuação consultiva e contenciosa perante órgãos da Administração Pública, Tribunais de Contas e Poder Judiciário. O escritório presta suporte estratégico a Municípios, Câmaras Municipais, agentes públicos, empresas e particulares em demandas de elevada complexidade administrativa.</p>
+                    <p class="area-topics-label">Atuação em</p>
                     <div class="area-topics">
-                        <span>Relações governamentais</span><span>Concessões e autorizações</span>
-                        <span>Licitações e concorrências</span><span>Parcerias público-privadas</span>
-                        <span>Improbidade administrativa</span><span>Responsabilidade fiscal</span>
+                        <span>Licitações e contratos administrativos</span><span>Processos administrativos e sindicâncias</span>
+                        <span>Improbidade administrativa</span><span>Defesa de agentes públicos</span>
+                        <span>Tribunais de Contas</span><span>Convênios, termos de fomento e parcerias</span>
+                        <span>Servidores públicos</span><span>Governança e responsabilidade fiscal</span>
                     </div>
                 </div>
                 <div class="area-card fade-up delay-1">
                     <div class="area-number">02 / Eleitoral</div>
                     <h3 class="area-title">Direito Eleitoral</h3>
-                    <p class="area-description">Ramo autônomo do Direito Público que regulamenta os direitos políticos dos cidadãos e o processo eleitoral, assegurando a organização e o exercício democrático.</p>
+                    <p class="area-description">Atuação estratégica em todas as fases do processo eleitoral, prestando assessoria jurídica a candidatos, partidos políticos, parlamentares e gestores públicos. O escritório desenvolve soluções preventivas e contenciosas perante a Justiça Eleitoral, preservando mandatos, direitos políticos e a segurança jurídica das campanhas.</p>
+                    <p class="area-topics-label">Atuação em</p>
                     <div class="area-topics">
-                        <span>Impugnações e recursos</span><span>Doação eleitoral</span>
-                        <span>Propaganda eleitoral</span><span>Campanhas eleitorais</span>
-                        <span>Mandatos legislativos</span>
+                        <span>Registro de candidatura</span><span>Ações eleitorais</span>
+                        <span>Prestação de contas</span><span>Propaganda eleitoral</span>
+                        <span>Direito partidário</span><span>Recursos perante TRE e TSE</span>
+                        <span>Consultoria para campanhas</span><span>Defesa de mandatos eletivos</span>
                     </div>
                 </div>
                 <div class="area-card fade-up delay-2">
                     <div class="area-number">03 / Penal</div>
                     <h3 class="area-title">Crimes contra a Administração Pública</h3>
-                    <p class="area-description">Atos ilícitos que violam o dever de lealdade ao Estado, processados na esfera criminal de acordo com o Código Penal Brasileiro.</p>
+                    <p class="area-description">Atuação especializada na defesa técnica de agentes públicos, particulares e pessoas jurídicas em investigações e processos relacionados aos crimes contra a Administração Pública. O escritório presta assessoria desde a fase investigatória até a atuação perante os Tribunais Superiores, desenvolvendo estratégias jurídicas voltadas à preservação das garantias constitucionais, da reputação institucional e da segurança jurídica de seus clientes.</p>
+                    <p class="area-topics-label">Atuação em</p>
                     <div class="area-topics">
-                        <span>Peculato</span><span>Concussão</span>
-                        <span>Corrupção passiva</span><span>Prevaricação</span>
-                        <span>Violação de sigilo funcional</span>
+                        <span>Crimes contra a Administração Pública</span><span>Crimes de responsabilidade de agentes políticos</span>
+                        <span>Crimes previstos na Lei de Licitações e Contratos Administrativos</span><span>Defesa em inquéritos policiais e procedimentos investigatórios</span>
+                        <span>Atuação perante o Ministério Público e Delegacias Especializadas</span><span>Ações penais envolvendo agentes públicos</span>
+                        <span>Recursos perante os Tribunais Superiores</span>
+                    </div>
+                </div>
+                <div class="area-card fade-up">
+                    <div class="area-number">04 / Constitucional</div>
+                    <h3 class="area-title">Direito Constitucional</h3>
+                    <p class="area-description">Assessoria jurídica em matérias constitucionais relacionadas à organização do Estado, prerrogativas institucionais, direitos fundamentais e controle de constitucionalidade, com atuação perante Tribunais de Justiça, Tribunais Superiores e Supremo Tribunal Federal.</p>
+                    <p class="area-topics-label">Atuação em</p>
+                    <div class="area-topics">
+                        <span>Controle de constitucionalidade</span><span>Ações constitucionais</span>
+                        <span>Mandado de Segurança</span><span>Direitos fundamentais</span>
+                        <span>Liberdade de expressão</span><span>Prerrogativas parlamentares</span>
+                        <span>Competência legislativa</span><span>Recursos aos Tribunais Superiores</span>
+                    </div>
+                </div>
+                <div class="area-card fade-up delay-1">
+                    <div class="area-number">05 / Processo Legislativo</div>
+                    <h3 class="area-title">Processo Legislativo</h3>
+                    <p class="area-description">Consultoria jurídica especializada para Casas Legislativas, parlamentares e órgãos públicos na elaboração de normas e no acompanhamento integral do processo legislativo, assegurando conformidade constitucional, legal e regimental.</p>
+                    <p class="area-topics-label">Atuação em</p>
+                    <div class="area-topics">
+                        <span>Projetos de Lei</span><span>Emendas Legislativas</span>
+                        <span>Pareceres Jurídicos</span><span>Regimentos Internos</span>
+                        <span>Leis Orgânicas</span><span>Comissões Permanentes</span>
+                        <span>Técnica Legislativa</span><span>Controle preventivo de constitucionalidade</span>
                     </div>
                 </div>
             </div>
