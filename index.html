@@ -525,19 +525,26 @@
         .escritorio { padding: var(--section-py) 0; position: relative; overflow: hidden; }
         .escritorio-header { text-align: center; margin-bottom: 64px; }
         .escritorio-header .divider { margin: 24px auto; }
-        .escritorio-grid {
-            display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px;
+        .escritorio-video { max-width: 980px; margin: 0 auto; }
+        .office-video {
+            position: relative; width: 100%; aspect-ratio: 16/9;
+            overflow: hidden; cursor: pointer; background: #000;
         }
-        .escritorio-item { overflow: hidden; position: relative; }
-        .escritorio-item:nth-child(1) { grid-column: span 8; aspect-ratio: 16/10; }
-        .escritorio-item:nth-child(2) { grid-column: span 4; aspect-ratio: 4/5; }
-        .escritorio-item:nth-child(3) { grid-column: span 4; aspect-ratio: 4/5; }
-        .escritorio-item:nth-child(4) { grid-column: span 8; aspect-ratio: 16/10; }
-        .escritorio-item img {
+        .office-video .video-thumb { position: absolute; inset: 0; }
+        .office-video img {
             width: 100%; height: 100%; object-fit: cover;
             transition: transform .6s;
         }
-        .escritorio-item:hover img { transform: scale(1.05); }
+        .office-video:hover img { transform: scale(1.04); }
+        .office-video .video-play {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 84px; height: 84px; border-radius: 50%;
+            background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.35);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; transition: background .3s, transform .3s; padding-left: 4px;
+        }
+        .office-video:hover .video-play { background: rgba(0,0,0,0.75); transform: translate(-50%, -50%) scale(1.08); }
 
         /* CONTATO (DARK) */
         .contato { padding: var(--section-py) 0; position: relative; overflow: hidden; }
@@ -603,10 +610,6 @@
             .video-card.featured { grid-column: 1 / -1; grid-row: auto; }
             .video-card.featured .video-thumb-wrap { aspect-ratio: 16/9; height: auto; }
             .press-card { flex: 0 0 280px; }
-            .escritorio-item:nth-child(1) { grid-column: span 12; }
-            .escritorio-item:nth-child(2) { grid-column: span 6; }
-            .escritorio-item:nth-child(3) { grid-column: span 6; }
-            .escritorio-item:nth-child(4) { grid-column: span 12; }
         }
 
         @media (max-width: 768px) {
@@ -627,7 +630,6 @@
             .video-card.featured { grid-column: auto; grid-row: auto; }
             .video-card.featured .video-thumb-wrap { aspect-ratio: 16/9; height: auto; }
             .press-card { flex: 0 0 260px; }
-            .escritorio-item:nth-child(n) { grid-column: span 12; aspect-ratio: 16/10; }
             .contato-grid { grid-template-columns: 1fr; }
             .footer-inner { flex-direction: column; text-align: center; }
             .hero-ctas { flex-direction: column; width: 100%; }
@@ -1012,18 +1014,13 @@
                 <h2 class="section-title">Nosso<strong>escritório</strong></h2>
                 <div class="divider"></div>
             </div>
-            <div class="escritorio-grid">
-                <div class="escritorio-item fade-up">
-                    <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1776869895/fachada_vhc_k8g3gc.jpg" alt="Fachada VHR Advogados" loading="lazy">
-                </div>
-                <div class="escritorio-item fade-up delay-1">
-                    <img src="https://yata-apix-81e19d30-6d90-4ed4-ac46-047816383102.s3-object.locaweb.com.br/19169651d0824ea4a6e763fff25eff12.jpg" alt="Recepção" loading="lazy">
-                </div>
-                <div class="escritorio-item fade-up">
-                    <img src="https://yata-apix-81e19d30-6d90-4ed4-ac46-047816383102.s3-object.locaweb.com.br/a83e73a240a1498b88338bbcd5fa040a.jpg" alt="Sala de reunião" loading="lazy">
-                </div>
-                <div class="escritorio-item fade-up delay-1">
-                    <img src="https://yata-apix-81e19d30-6d90-4ed4-ac46-047816383102.s3-object.locaweb.com.br/b67c9bd723d041a3bc5e2f15a9310dad.jpg" alt="Interior do escritório" loading="lazy">
+            <div class="escritorio-video fade-up">
+                <div class="video-card office-video" data-video="4ocB1LYBZxc">
+                    <div class="video-thumb">
+                        <img src="https://img.youtube.com/vi/4ocB1LYBZxc/maxresdefault.jpg" alt="Vídeo institucional VHR Advogados" loading="lazy"
+                             onerror="this.onerror=null;this.src='https://img.youtube.com/vi/4ocB1LYBZxc/hqdefault.jpg';">
+                        <div class="video-play"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+                    </div>
                 </div>
             </div>
         </div>
