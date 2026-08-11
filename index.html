@@ -530,21 +530,23 @@
             position: relative; width: 100%; aspect-ratio: 16/9;
             overflow: hidden; cursor: pointer; background: #000;
         }
-        .office-video .video-thumb { position: absolute; inset: 0; }
-        .office-video img {
+        .office-video video {
+            position: absolute; inset: 0;
             width: 100%; height: 100%; object-fit: cover;
-            transition: transform .6s;
+            display: block;
         }
-        .office-video:hover img { transform: scale(1.04); }
         .office-video .video-play {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 84px; height: 84px; border-radius: 50%;
             background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.35);
             display: flex; align-items: center; justify-content: center;
-            color: #fff; transition: background .3s, transform .3s; padding-left: 4px;
+            color: #fff; transition: background .3s, transform .3s, opacity .3s;
+            padding-left: 4px; z-index: 2;
         }
         .office-video:hover .video-play { background: rgba(0,0,0,0.75); transform: translate(-50%, -50%) scale(1.08); }
+        .office-video.playing { cursor: default; }
+        .office-video.playing .video-play { opacity: 0; pointer-events: none; }
         .video-caption {
             text-align: center; margin-top: 18px;
             font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
@@ -1020,11 +1022,12 @@
                 <div class="divider"></div>
             </div>
             <div class="escritorio-video fade-up">
-                <div class="video-card office-video" data-video="4ocB1LYBZxc">
-                    <div class="video-thumb">
-                        <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786459486/thumbnail_jwzdbg.png" alt="Vídeo institucional VHR Advogados" loading="lazy">
-                        <div class="video-play"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
-                    </div>
+                <div class="office-video" id="officeVideo">
+                    <video id="officeVideoEl" playsinline preload="none"
+                           poster="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786459486/thumbnail_jwzdbg.png">
+                        <source src="https://res.cloudinary.com/dnnnn7njk/video/upload/v1786457804/head_video_site_erhve3.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-play" id="officeVideoPlay"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
                 </div>
                 <p class="video-caption">Clique para assistir</p>
             </div>
@@ -1186,6 +1189,29 @@
             document.body.style.overflow = '';
         }
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && videoModal.classList.contains('open')) closeVideo(); });
+
+        // Player nativo do escritório (Cloudinary)
+        const officeVideo = document.getElementById('officeVideo');
+        const officeVideoEl = document.getElementById('officeVideoEl');
+        if (officeVideo && officeVideoEl) {
+            officeVideo.addEventListener('click', () => {
+                if (officeVideo.classList.contains('playing')) return;
+                officeVideo.classList.add('playing');
+                officeVideoEl.setAttribute('controls', '');
+                officeVideoEl.play();
+            });
+            officeVideoEl.addEventListener('pause', () => {
+                if (officeVideoEl.currentTime === 0 || officeVideoEl.ended) {
+                    officeVideo.classList.remove('playing');
+                    officeVideoEl.removeAttribute('controls');
+                }
+            });
+            officeVideoEl.addEventListener('ended', () => {
+                officeVideo.classList.remove('playing');
+                officeVideoEl.removeAttribute('controls');
+                officeVideoEl.load();
+            });
+        }
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && imgLightbox.classList.contains('open')) closeLightbox(); });
 
         // Image lightbox
