@@ -152,20 +152,21 @@
             position: absolute; top: 50%; left: 0; transform: translateY(-50%);
             font-weight: 900; font-size: clamp(300px, 50vw, 700px);
             color: rgba(255,255,255,0.025); line-height: 0.8; letter-spacing: -0.05em;
-            pointer-events: none; user-select: none; will-change: transform; z-index: 1;
+            pointer-events: none; user-select: none; will-change: transform; z-index: 3;
         }
-        .hero-photo {
-            position: absolute; right: 0; bottom: 0;
-            width: 50%; top: calc(var(--header-h) + 72px); overflow: hidden;
-            z-index: 2; will-change: transform;
+        .hero-video {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1;
+            filter: grayscale(100%) contrast(1.05) brightness(0.85);
         }
-        .hero-photo img {
-            width: 100%; height: 110%; object-fit: cover; object-position: top center;
+        .hero-video-overlay {
+            position: absolute; inset: 0; z-index: 2;
+            background: linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.7) 40%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.6) 100%);
         }
-        .hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.75) 35%, rgba(0,0,0,0.2) 60%, transparent 100%);
-            z-index: 3;
+        .hero-vignette {
+            position: absolute; inset: 0; z-index: 3; pointer-events: none;
+            box-shadow: inset 0 0 180px 60px rgba(0,0,0,0.9);
+            background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.65) 100%);
         }
         .hero-overlay-bottom {
             position: absolute; bottom: 0; left: 0; right: 0; height: 160px;
@@ -553,6 +554,59 @@
             text-transform: uppercase; color: var(--gray-500);
         }
 
+        /* VÍDEO MANIFESTO (dentro da quote) */
+        .manifesto-video { max-width: 900px; margin: 72px auto 0; }
+        .manifesto-label {
+            font-size: 12px; font-weight: 700; letter-spacing: 3.5px;
+            text-transform: uppercase; color: var(--gray-400);
+            text-align: center; margin-bottom: 28px;
+        }
+
+        /* EQUIPE / SÓCIOS (WHITE) */
+        .equipe { padding: var(--section-py) 0; }
+        .equipe-header { text-align: center; margin-bottom: 56px; }
+        .equipe-header .divider { margin: 24px auto; }
+        .equipe-subgroup {
+            font-size: 11px; font-weight: 700; letter-spacing: 3.5px;
+            text-transform: uppercase; color: var(--gray-500);
+            margin-bottom: 28px; padding-bottom: 14px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .socios-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: clamp(28px, 4vw, 56px);
+        }
+        .socio-card { display: flex; flex-direction: column; }
+        .socio-photo {
+            width: 100%; aspect-ratio: 4/5; overflow: hidden;
+            background: #eee; margin-bottom: 28px;
+        }
+        .socio-photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: grayscale(100%); transition: filter .5s, transform .6s;
+        }
+        .socio-card:hover .socio-photo img { filter: grayscale(0%); transform: scale(1.03); }
+        .socio-name { font-size: 23px; font-weight: 700; color: var(--black); line-height: 1.25; margin-bottom: 10px; }
+        .socio-role {
+            font-size: 12px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--gray-600); margin-bottom: 22px;
+        }
+        .socio-list { list-style: none; }
+        .socio-list li {
+            font-size: 14px; color: var(--gray-700); line-height: 1.6;
+            padding-left: 18px; position: relative; margin-bottom: 9px;
+        }
+        .socio-list li::before {
+            content: ''; position: absolute; left: 0; top: 10px;
+            width: 6px; height: 1px; background: var(--gray-400);
+        }
+        .colaboradores { width: 100%; overflow: hidden; }
+        .colaboradores img {
+            width: 100%; height: auto; display: block;
+            filter: grayscale(100%); transition: filter .6s;
+        }
+        .colaboradores:hover img { filter: grayscale(0%); }
+
         /* CONTATO (DARK) */
         .contato { padding: var(--section-py) 0; position: relative; overflow: hidden; }
         .contato .bg-letter { bottom: -40px; left: -50px; font-size: clamp(180px, 26vw, 400px); color: rgba(255,255,255,0.025); z-index: 0; }
@@ -624,8 +678,7 @@
             .nav-desktop { display: none; }
             .hamburger { display: flex; }
             .logo-img { width: 220px; }
-            .hero-photo { width: 100%; opacity: 0.3; top: 0; }
-            .hero-overlay { background: linear-gradient(0deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.4) 100%); }
+            .hero-video-overlay { background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.7) 100%); }
             .hero-scroll { display: none; }
             .sobre-grid { grid-template-columns: 1fr; }
             .sobre-image-wrap { max-width: 420px; margin: 0 auto; }
@@ -638,6 +691,8 @@
             .video-card.featured .video-thumb-wrap { aspect-ratio: 16/9; height: auto; }
             .press-card { flex: 0 0 260px; }
             .contato-grid { grid-template-columns: 1fr; }
+            .socios-grid { grid-template-columns: 1fr; gap: 48px; }
+            .socio-photo { aspect-ratio: 3/4; }
             .footer-inner { flex-direction: column; text-align: center; }
             .hero-ctas { flex-direction: column; width: 100%; }
             .btn { justify-content: center; }
@@ -676,11 +731,13 @@
     <!-- HERO -->
     <section class="hero">
         <div class="hero-bg" data-parallax="0.3"></div>
+        <video class="hero-video" autoplay muted playsinline preload="auto"
+               poster="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786459486/thumbnail_jwzdbg.png">
+            <source src="https://res.cloudinary.com/dnnnn7njk/video/upload/v1786654316/0_Law_Legal_1280x720_fsawtw.mp4" type="video/mp4">
+        </video>
+        <div class="hero-video-overlay"></div>
+        <div class="hero-vignette"></div>
         <div class="hero-letter" data-parallax="0.15">VHR</div>
-        <div class="hero-photo" data-parallax="-0.12">
-            <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1783538636/fotoescritorio_txaw8u.jpg" alt="Victor Hugo Pereira dos Santos — VHR Advogados" loading="eager">
-        </div>
-        <div class="hero-overlay"></div>
         <div class="hero-overlay-bottom"></div>
         <div class="hero-content">
             <div class="hero-content-inner">
@@ -699,7 +756,7 @@
                 </div>
             </div>
         </div>
-        <div class="hero-scroll"><span>Scroll</span><div class="hero-scroll-line"></div></div>
+        <div class="hero-scroll"><span>Desça</span><div class="hero-scroll-line"></div></div>
     </section>
 
 
@@ -739,6 +796,17 @@
                 <span class="quote-mark">"</span>
                 <p class="quote-text">Advocacia com qualidade,<br><em>excelência e credibilidade.</em></p>
                 <p class="quote-author">Victor Hugo Pereira dos Santos<span>OAB/GO 5.445 · OAB/DF 83.441</span></p>
+            </div>
+            <div class="manifesto-video fade-up">
+                <p class="manifesto-label">Assista ao nosso manifesto</p>
+                <div class="office-video" id="officeVideo">
+                    <video id="officeVideoEl" playsinline preload="none"
+                           poster="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786459486/thumbnail_jwzdbg.png">
+                        <source src="https://res.cloudinary.com/dnnnn7njk/video/upload/v1786457804/head_video_site_erhve3.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-play" id="officeVideoPlay"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <p class="video-caption">Clique para assistir</p>
             </div>
         </div>
     </section>
@@ -1013,23 +1081,52 @@
         </div>
     </section>
 
-    <!-- ESCRITÓRIO (WHITE) -->
-    <section class="escritorio theme-white" id="escritorio">
+    <!-- EQUIPE / SÓCIOS (WHITE) -->
+    <section class="equipe theme-white" id="escritorio">
         <div class="container">
-            <div class="escritorio-header fade-up">
-                <p class="section-label">Estrutura</p>
-                <h2 class="section-title">Nosso<strong>escritório</strong></h2>
+            <div class="equipe-header fade-up">
+                <p class="section-label">Escritório</p>
+                <h2 class="section-title">Quem faz<strong>a VHR</strong></h2>
                 <div class="divider"></div>
             </div>
-            <div class="escritorio-video fade-up">
-                <div class="office-video" id="officeVideo">
-                    <video id="officeVideoEl" playsinline preload="none"
-                           poster="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786459486/thumbnail_jwzdbg.png">
-                        <source src="https://res.cloudinary.com/dnnnn7njk/video/upload/v1786457804/head_video_site_erhve3.mp4" type="video/mp4">
-                    </video>
-                    <div class="video-play" id="officeVideoPlay"><svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+
+            <p class="equipe-subgroup fade-up">Nossa equipe</p>
+            <div class="colaboradores fade-up">
+                <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1783538636/fotoescritorio_txaw8u.jpg" alt="Equipe VHR Advogados" loading="lazy">
+            </div>
+
+            <p class="equipe-subgroup fade-up" style="margin-top: 72px;">Sócios</p>
+            <div class="socios-grid">
+                <div class="socio-card fade-up">
+                    <div class="socio-photo">
+                        <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786654522/vitor_jy32r9.jpg" alt="Victor Hugo dos Santos Pereira" loading="lazy">
+                    </div>
+                    <div class="socio-info">
+                        <h3 class="socio-name">Victor Hugo dos Santos Pereira</h3>
+                        <p class="socio-role">Especialista em Direito Público e Eleitoral</p>
+                        <ul class="socio-list">
+                            <li>Mestrando em Direito Constitucional</li>
+                            <li>Administrador de Empresas pela Universidade Federal de Goiás — UFG</li>
+                            <li>Prêmio Summa Cum Laude</li>
+                            <li>Professor de Direito</li>
+                            <li>Ex-Procurador Geral — Aparecida de Goiânia/GO</li>
+                        </ul>
+                    </div>
                 </div>
-                <p class="video-caption">Clique para assistir</p>
+                <div class="socio-card fade-up delay-1">
+                    <div class="socio-photo">
+                        <img src="https://res.cloudinary.com/dnnnn7njk/image/upload/v1786654522/socio_c1qusx.jpg" alt="Rodrigo Teixeira Teles" loading="lazy">
+                    </div>
+                    <div class="socio-info">
+                        <h3 class="socio-name">Rodrigo Teixeira Teles</h3>
+                        <p class="socio-role">Especialista em Direito Público e Criminal</p>
+                        <ul class="socio-list">
+                            <li>Historiador pela Universidade Federal de Goiás — UFG</li>
+                            <li>Prêmio Summa Cum Laude</li>
+                            <li>Professor de Direito</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
